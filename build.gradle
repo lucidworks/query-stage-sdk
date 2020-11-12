@@ -1,0 +1,50 @@
+plugins {
+    id 'nebula.release' version '15.2.0' apply(false)
+}
+
+allprojects {
+    apply plugin: 'nebula.release'
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'jacoco'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url "https://artifactory.lucidworks.com/artifactory/public-artifacts/"
+        }
+    }
+
+    dependencies {
+        testImplementation "junit:junit:${junitVersion}"
+        testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+            }
+        }
+        repositories {
+            mavenLocal()
+            maven {
+                url project.hasProperty('repositoryUrl') ? project.property('repositoryUrl') : ''
+                credentials {
+                    username project.hasProperty('lucidArtifactoryUsername') ? project.property('lucidArtifactoryUsername') : ''
+                    password project.hasProperty('lucidArtifactoryPassword') ? project.property('lucidArtifactoryPassword') : ''
+                }
+                authentication {
+                    basic(BasicAuthentication)
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,4 @@
+rootProject.name = 'query-stage-sdk'
+include 'query-stage-plugin-sdk'
+include 'query-stage-sdk-test'
+

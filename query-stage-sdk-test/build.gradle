@@ -1,0 +1,10 @@
+java {
+    withSourcesJar()
+}
+
+dependencies {
+    implementation project(":query-stage-plugin-sdk")
+
+    implementation "junit:junit:${junitVersion}"
+    implementation "org.mockito:mockito-core:${mockitoVersion}"
+}
