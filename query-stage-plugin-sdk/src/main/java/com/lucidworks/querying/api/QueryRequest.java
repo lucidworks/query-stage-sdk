@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Fusion query request. Part of the {@link QueryRequestAndResponse} and populated before the query has been
+ * Fusion query request. Part of the {@link QueryRequestResponse} and populated before the query has been
  * sent to Solr.
  */
-public interface Request {
+public interface QueryRequest {
 
     /**
      * @return the HTTP method used to send the request to Fusion.
@@ -15,7 +15,7 @@ public interface Request {
     String getHttpMethod();
 
     /**
-     * @return the map of headers
+     * @return the request headers
      */
     Map<String, Collection<String>> getHeaders();
 
@@ -68,14 +68,6 @@ public interface Request {
      * @param queryParam a query parameter to remove from the query
      */
     void removeQueryParam(String queryParam);
-
-    /**
-     * Remove any query parameters from the query that match the given query parameter and associated value.
-     *
-     * @param queryParam a query parameter
-     * @param value the query parameter value
-     */
-    void removeQueryParam(String queryParam, String value);
 
     /**
      * Clear all query parameters from the query.

@@ -1,13 +1,13 @@
 package com.lucidworks.indexing.sdk.test;
 
-import com.lucidworks.querying.api.Request;
+import com.lucidworks.querying.api.QueryRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestRequest implements Request {
+public class TestQueryRequest implements QueryRequest {
 
     private final Map<String, Collection<String>> queryParams = new HashMap<>();
 
@@ -60,15 +60,6 @@ public class TestRequest implements Request {
     @Override
     public void removeQueryParam(String queryParam) {
         queryParams.remove(queryParam);
-    }
-
-    @Override
-    public void removeQueryParam(String queryParam, String value) {
-        final Collection<String> values = getQueryParam(queryParam);
-        if (values != null) {
-            values.remove(value);
-            queryParams.put(queryParam, values);
-        }
     }
 
     @Override

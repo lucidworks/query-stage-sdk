@@ -1,9 +1,9 @@
 package com.lucidworks.indexing.sdk.test;
 
-import com.lucidworks.querying.api.QueryRequestAndResponse;
+import com.lucidworks.querying.api.QueryRequest;
+import com.lucidworks.querying.api.QueryRequestResponse;
 import com.lucidworks.querying.api.QueryStage;
-import com.lucidworks.querying.api.Request;
-import com.lucidworks.querying.api.Response;
+import com.lucidworks.querying.api.QueryResponse;
 import com.lucidworks.querying.api.fusion.Fusion;
 import com.lucidworks.querying.config.QueryStageConfig;
 import org.junit.runner.RunWith;
@@ -44,8 +44,8 @@ public abstract class QueryStageTestBase<C extends QueryStageConfig> {
    *
    * @return query request and response instance
    */
-  public QueryRequestAndResponse newQueryRequestAndResponse(Request request, Response response) {
-    return new TestQueryRequestAndResponse(request, response);
+  public QueryRequestResponse newQueryRequestAndResponse(QueryRequest queryRequest, QueryResponse queryResponse) {
+    return new TestQueryRequestResponse(queryRequest, queryResponse);
   }
 
   /**

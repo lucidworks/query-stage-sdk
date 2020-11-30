@@ -5,10 +5,10 @@ import java.util.Set;
 import java.util.function.UnaryOperator;
 
 /**
- * A document in the query {@link Response}.
+ * A document in the query {@link QueryResponse}.
  *
  * Documents in the query's result set may be accessed by calling
- * {@link QueryRequestAndResponse#getResponse()}.{@link Response#getDocuments()}
+ * {@link QueryRequestResponse#getQueryResponse()}.{@link QueryResponse#getDocuments()}
  */
 public interface Document {
 
@@ -111,15 +111,6 @@ public interface Document {
          * @return this field, with a modified list of values
          */
         Field<T> addValues(Collection<T> values);
-
-        /**
-         * Get the first value from the field.
-         *
-         * This is useful for doing manipulations with single-valued fields.
-         *
-         * @return the first value from the field.
-         */
-        T getFirst();
 
         /**
          * Apply mapping function to each field value.

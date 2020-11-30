@@ -1,14 +1,17 @@
 package com.lucidworks.indexing.sdk.test;
 
 import com.lucidworks.querying.api.Document;
-import com.lucidworks.querying.api.Response;
+import com.lucidworks.querying.api.QueryResponse;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-public class TestResponse implements Response {
+public class TestQueryResponse implements QueryResponse {
 
     private List<Document> documents = new ArrayList<>();
 
@@ -17,6 +20,16 @@ public class TestResponse implements Response {
     private Map<String, Map<String, Object>> highlighting = new HashMap<>();
 
     private Map<String, Map<String, Object>> groupedResults = new HashMap<>();
+
+    @Override
+    public Optional<Integer> getStatusCode() {
+        return Optional.empty();
+    }
+
+    @Override
+    public Map<String, Collection<String>> getHeaders() {
+        return Collections.emptyMap();
+    }
 
     @Override
     public long getTotalTime() {

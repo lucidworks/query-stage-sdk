@@ -1,13 +1,25 @@
 package com.lucidworks.querying.api;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
- * Fusion query response. Part of the {@link QueryRequestAndResponse} and populated after the result set has been
+ * Fusion query response. Part of the {@link QueryRequestResponse} and populated after the result set has been
  * retrieved from Solr.
  */
-public interface Response {
+public interface QueryResponse {
+
+    /**
+     * @return the status code returned from Solr
+     */
+    Optional<Integer> getStatusCode();
+
+    /**
+     * @return the response headers
+     */
+    Map<String, Collection<String>> getHeaders();
 
     /**
      * @return the total amount of time your query spent passing through the query pipeline
