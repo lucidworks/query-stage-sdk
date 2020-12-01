@@ -1,6 +1,7 @@
 package com.lucidworks.querying.api;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
@@ -34,9 +35,9 @@ public interface Document {
      * Retrieve from the document the given field.
      *
      * @param field the name of the field to retrieve
-     * @return the retrieved field or null if the field is not in the document
+     * @return the retrieved field if present, otherwise an empty {@link Optional}
      */
-    Field<Object> getField(String field);
+    Optional<Field<Object>> getField(String field);
 
     /**
      * Set the given field with the given value on the document.
@@ -45,8 +46,10 @@ public interface Document {
      *
      * @param field the name of the field
      * @param value the value of the field
+     *
+     * @return the previously set field if any, otherwise null
      */
-    void setField(String field, Object value);
+    Field<Object> setField(String field, Object value);
 
     /**
      * Remove the given field from the document.
@@ -80,7 +83,7 @@ public interface Document {
          * @param value Value to set
          * @return this field, with modified list of values
          */
-        Field<T> setValue(T value);
+        Field<T> setValue(Object value);
 
         /**
          * Set new values for this field.
@@ -90,7 +93,7 @@ public interface Document {
          * @param values Collection of values to set
          * @return this field, with a modified list of values
          */
-        Field<T> setValues(Collection<T> values);
+        Field<T> setValues(Collection<?> values);
 
         /**
          * Add a value to the field.
@@ -100,7 +103,7 @@ public interface Document {
          * @param value Value to add
          * @return this field, with a modified list of values
          */
-        Field<T> addValue(T value);
+        Field<T> addValue(Object value);
 
         /**
          * Add more values to the field.
@@ -110,7 +113,7 @@ public interface Document {
          * @param values Collection of values to add
          * @return this field, with a modified list of values
          */
-        Field<T> addValues(Collection<T> values);
+        Field<T> addValues(Collection<?> values);
 
         /**
          * Apply mapping function to each field value.
