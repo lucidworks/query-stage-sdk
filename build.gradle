@@ -1,5 +1,5 @@
 plugins {
-    id 'nebula.release' version '15.2.0' apply(false)
+    id 'nebula.release' version '14.1.1' apply false
 }
 
 allprojects {
