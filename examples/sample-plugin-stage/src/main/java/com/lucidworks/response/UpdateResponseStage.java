@@ -9,7 +9,7 @@ import com.lucidworks.sample.SampleStageConfig;
 
 import java.util.List;
 
-@Stage(type = "another", configClass = SampleStageConfig.class)
+@Stage(type = "update-response", configClass = SampleStageConfig.class)
 public class UpdateResponseStage extends QueryStageBase<UpdateResponseStageConfig> {
 
     @Override
