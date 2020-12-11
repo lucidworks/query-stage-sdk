@@ -1,4 +1,4 @@
-package com.lucidworks.sample;
+package com.lucidworks.sample.request;
 
 import com.lucidworks.querying.api.Context;
 import com.lucidworks.querying.api.QueryRequestResponse;
@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 
-@Stage(type = "sample", configClass = SampleStageConfig.class)
-public class SampleStage extends QueryStageBase<SampleStageConfig> {
+@Stage(type = "update-request", configClass = UpdateRequestStageConfig.class)
+public class UpdateRequestStage extends QueryStageBase<UpdateRequestStageConfig> {
 
-    private static final Logger logger = LoggerFactory.getLogger(SampleStage.class);
+    private static final Logger logger = LoggerFactory.getLogger(UpdateRequestStage.class);
 
     @Override
     public QueryRequestResponse process(QueryRequestResponse queryRequestResponse, Context context) {
@@ -22,7 +22,7 @@ public class SampleStage extends QueryStageBase<SampleStageConfig> {
 
     @Override
     public void process(QueryRequestResponse queryRequestResponse, Context context, Consumer<QueryRequestResponse> output) {
-        logger.info("Sample Stage emitting queryRequestResponse with query params: {}", queryRequestResponse.getQueryRequest().getQueryParams());
+        logger.info("Simple Stage emitting queryRequestResponse with query params: {}", queryRequestResponse.getQueryRequest().getQueryParams());
 
         output.accept(process(queryRequestResponse, context));
     }

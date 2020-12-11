@@ -1,13 +1,18 @@
-package com.lucidworks.response;
+package com.lucidworks.sample.response;
 
+import com.lucidworks.fusion.schema.SchemaAnnotations.RootSchema;
 import com.lucidworks.fusion.schema.SchemaAnnotations.Property;
 import com.lucidworks.fusion.schema.SchemaAnnotations.StringSchema;
 import com.lucidworks.querying.config.QueryStageConfig;
 
+@RootSchema(
+        title = "Update Response",
+        description = "Update Response Query Stage"
+)
 public interface UpdateResponseStageConfig extends QueryStageConfig {
 
     @Property(
-            title = "Response field",
+            title = "Update Response field",
             description = "Name of field to add to response",
             required = true
     )
@@ -16,7 +21,7 @@ public interface UpdateResponseStageConfig extends QueryStageConfig {
 
     @Property(
             title = "Value",
-            description = "Value to add to field in response."
+            description = "Value to add to response field"
     )
     @StringSchema
     String value();

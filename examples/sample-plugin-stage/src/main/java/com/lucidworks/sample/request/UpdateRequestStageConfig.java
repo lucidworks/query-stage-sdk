@@ -1,4 +1,4 @@
-package com.lucidworks.sample;
+package com.lucidworks.sample.request;
 
 import com.lucidworks.fusion.schema.SchemaAnnotations.RootSchema;
 import com.lucidworks.fusion.schema.SchemaAnnotations.Property;
@@ -6,10 +6,10 @@ import com.lucidworks.fusion.schema.SchemaAnnotations.StringSchema;
 import com.lucidworks.querying.config.QueryStageConfig;
 
 @RootSchema(
-        title = "Sample",
-        description = "Sample Query Stage"
+        title = "Update Request",
+        description = "Update Request Query Stage"
 )
-public interface SampleStageConfig extends QueryStageConfig {
+public interface UpdateRequestStageConfig extends QueryStageConfig {
 
     @Property(
             title = "Query parameter",
@@ -21,7 +21,7 @@ public interface SampleStageConfig extends QueryStageConfig {
 
     @Property(
             title = "Value",
-            description = "Sample text to put into the query parameter."
+            description = "Text to put into the query parameter."
     )
     @StringSchema
     String value();

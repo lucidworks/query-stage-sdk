@@ -40,7 +40,7 @@ task assemblePlugin(type: Jar) {
     manifest {
         attributes 'Plugin-Id': 'sample-plugin'
         attributes 'Plugin-Version': '0.0.1'
-        attributes 'Plugin-SDK-Version': '1.0.0'
+        attributes 'Plugin-SDK-Version': '0.1.0-dev.7.uncommitted+APOLLO.26990.plugin.query.stage.418031d'
         attributes 'Plugin-Base-Package': 'com.lucidworks.sample'
     }
 
@@ -53,7 +53,7 @@ task assemblePlugin(type: Jar) {
 // use this gradle task to assemble and deploy plugin to Fusion
 task deploy(type: Exec, dependsOn: ["assemblePlugin"]) {
     commandLine "curl", "-u", "${fusionUser}:${fusionPassword}", "-X", "PUT", "-H", "content-type:application/zip",
-            "${fusionApiTarget}/api/query-stages/plugins",
+            "${fusionApiTarget}/api/query-stage-plugins",
             "--data-binary",
             "@${assemblePlugin.outputs.files.singleFile.absolutePath}"
 }

@@ -1,4 +1,4 @@
-package com.lucidworks.sample;
+package com.lucidworks.sample.request;
 
 import com.lucidworks.indexing.sdk.test.QueryStageTestBase;
 import com.lucidworks.indexing.sdk.test.TestQueryRequest;
@@ -11,11 +11,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
-public class SampleStageTest extends QueryStageTestBase<SampleStageConfig> {
+public class UpdateRequestStageTest extends QueryStageTestBase<UpdateRequestStageConfig> {
 
     @Test
     public void testProcess() throws ReflectiveOperationException {
-        SampleStageConfig stageConfig = newConfig(SampleStageConfig.class, config -> {
+        UpdateRequestStageConfig stageConfig = newConfig(UpdateRequestStageConfig.class, config -> {
             when(config.queryParam()).thenReturn("timeout");
             when(config.value()).thenReturn("5000");
         });
@@ -25,7 +25,7 @@ public class SampleStageTest extends QueryStageTestBase<SampleStageConfig> {
 
         QueryRequestResponse queryRequestResponse = newQueryRequestAndResponse(queryRequest, queryResponse);
 
-        SampleStage stage = createStage(SampleStage.class, stageConfig);
+        UpdateRequestStage stage = createStage(UpdateRequestStage.class, stageConfig);
         final QueryRequestResponse processedQRR = stage.process(queryRequestResponse, null);
 
         assertTrue(processedQRR.getQueryRequest().hasQueryParam("timeout"));

@@ -1,15 +1,14 @@
-package com.lucidworks.response;
+package com.lucidworks.sample.response;
 
 import com.lucidworks.querying.api.Context;
 import com.lucidworks.querying.api.Document;
 import com.lucidworks.querying.api.QueryRequestResponse;
 import com.lucidworks.querying.api.QueryStageBase;
 import com.lucidworks.querying.api.Stage;
-import com.lucidworks.sample.SampleStageConfig;
 
 import java.util.List;
 
-@Stage(type = "update-response", configClass = SampleStageConfig.class)
+@Stage(type = "update-response", configClass = UpdateResponseStageConfig.class)
 public class UpdateResponseStage extends QueryStageBase<UpdateResponseStageConfig> {
 
     @Override
