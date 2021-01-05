@@ -1,10 +1,11 @@
 package com.lucidworks.sample.response;
 
 import com.lucidworks.querying.api.Context;
-import com.lucidworks.querying.api.Document;
-import com.lucidworks.querying.api.QueryRequestResponse;
+import com.lucidworks.querying.api.DslQueryRequestResponse;
 import com.lucidworks.querying.api.QueryStageBase;
 import com.lucidworks.querying.api.Stage;
+import com.lucidworks.search.dsl.response.ResponseDocument;
+import com.lucidworks.search.dsl.response.Results;
 
 import java.util.List;
 
@@ -12,13 +13,12 @@ import java.util.List;
 public class UpdateResponseStage extends QueryStageBase<UpdateResponseStageConfig> {
 
     @Override
-    public QueryRequestResponse process(QueryRequestResponse queryRequestResponse, Context context) {
-        queryRequestResponse.getQueryResponse().ifPresent(queryResponse -> {
-            final List<Document> documents = queryResponse.getDocuments();
-            documents.forEach(document -> document.setField(config.field(), config.value()));
-            queryResponse.updateDocuments(documents);
-        });
+    public DslQueryRequestResponse process(DslQueryRequestResponse dslQueryRequestResponse, Context context) {
+        final Results results = dslQueryRequestResponse.getDslQueryResponse().getResults();
+        final List<ResponseDocument> docs = results.getList().getDocs();
+        docs.forEach(responseDocument -> responseDocument.getFields().put(config.field(), config.value()));
+        results.getList().setDocs(docs);
 
-        return queryRequestResponse;
+        return dslQueryRequestResponse;
     }
 }

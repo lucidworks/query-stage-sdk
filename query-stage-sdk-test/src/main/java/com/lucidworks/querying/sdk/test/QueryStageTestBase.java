@@ -1,9 +1,9 @@
-package com.lucidworks.indexing.sdk.test;
+package com.lucidworks.querying.sdk.test;
 
-import com.lucidworks.querying.api.QueryRequest;
-import com.lucidworks.querying.api.QueryRequestResponse;
+import com.lucidworks.querying.api.DslQueryRequest;
+import com.lucidworks.querying.api.DslQueryRequestResponse;
+import com.lucidworks.querying.api.DslQueryResponse;
 import com.lucidworks.querying.api.QueryStage;
-import com.lucidworks.querying.api.QueryResponse;
 import com.lucidworks.querying.api.fusion.Fusion;
 import com.lucidworks.querying.config.QueryStageConfig;
 import org.junit.runner.RunWith;
@@ -40,12 +40,12 @@ public abstract class QueryStageTestBase<C extends QueryStageConfig> {
   }
 
   /**
-   * Create new query request and response.
+   * Create new DSL query request response.
    *
-   * @return query request and response instance
+   * @return DSL query request response instance
    */
-  public QueryRequestResponse newQueryRequestAndResponse(QueryRequest queryRequest, QueryResponse queryResponse) {
-    return new TestQueryRequestResponse(queryRequest, queryResponse);
+  public DslQueryRequestResponse newDslQueryRequestResponse(DslQueryRequest dslQueryRequest, DslQueryResponse dslQueryResponse) {
+    return new TestDslQueryRequestResponse(dslQueryRequest, dslQueryResponse);
   }
 
   /**

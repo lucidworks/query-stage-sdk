@@ -46,41 +46,45 @@ public interface QueryStage<T extends QueryStageConfig> {
     void init(T config, Fusion fusion);
 
     /**
-     * Process a single queryRequestResponse. This method is called for each queryRequestResponse passing through a query pipeline.
+     * Process a single dslQueryRequestResponse. This method is called for each dslQueryRequestResponse passing through
+     * a query pipeline.
      *
-     * Implement this method to perform processing of a single {@link QueryRequestResponse} instance that results in either 1 or 0
-     * queryRequestResponses being emitted. Return null to drop query from the pipeline.
+     * Implement this method to perform processing of a single {@link DslQueryRequestResponse} instance that results in
+     * either 1 or 0 dslQueryRequestResponses being emitted. Return null to drop query from the pipeline.
      *
      * Note that this method implementation must be thread-safe as it can be invoked concurrently by multiple threads.
      *
-     * @param queryRequestResponse queryRequestResponse going through query pipeline
+     * @param dslQueryRequestResponse dslQueryRequestResponse going through query pipeline
      * @param context query pipeline context
      * @return processed query or null to drop query from the pipeline
      */
-    default QueryRequestResponse process(QueryRequestResponse queryRequestResponse, Context context) {
-        return queryRequestResponse;
+    default DslQueryRequestResponse process(DslQueryRequestResponse dslQueryRequestResponse, Context context) {
+        return dslQueryRequestResponse;
     }
 
     /**
-     * Process single queryRequestResponse. This method is called for each queryRequestResponse passing through index pipeline.
+     * Process single dslQueryRequestResponse. This method is called for each dslQueryRequestResponse passing through
+     * a query pipeline.
      *
-     * Implement this method to perform processing of single {@link QueryRequestResponse} instance that results in arbitrary
-     * number of queryRequestResponses being emitted. Call <code>output.accept(queryRequestResponse)</code> for each queryRequestResponse you want to
-     * emit as a result of processing. Note that after sending a queryRequestResponse instance to the output, its state
-     * may be changed by subsequent stages, therefore it is strongly advised to discard the queryRequestResponse instance
-     * immediately after emitting it. Passing <code>null</code> to <code>output</code> consumer will cause
-     * {@link IllegalArgumentException}.
+     * Implement this method to perform processing of single {@link DslQueryRequestResponse} instance that results in an
+     * arbitrary number of dslQueryRequestResponses being emitted.
      *
-     * Overriding the default implementation of this method will result in {@link #process(QueryRequestResponse, Context)} to
-     * not be called. Default implementation is to call {@link #process(QueryRequestResponse, Context)} method.
+     * Call <code>output.accept(dslQueryRequestResponse)</code> for each dslQueryRequestResponse you want to
+     * emit as a result of processing. Note that after sending a dslQueryRequestResponse instance to the output, its
+     * state may be changed by subsequent stages, therefore it is strongly advised to discard the
+     * dslQueryRequestResponse instance immediately after emitting it. Passing <code>null</code> to <code>output</code>
+     * consumer will cause {@link IllegalArgumentException}.
+     *
+     * Overriding the default implementation of this method will result in {@link #process(DslQueryRequestResponse, Context)}
+     * to not be called. Default implementation is to call {@link #process(DslQueryRequestResponse, Context)} method.
      *
      * Note that this method implementation must be thread-safe as it can be invoked concurrently by multiple threads.
      *
-     * @param queryRequestResponse queryRequestResponse going through query pipeline
+     * @param dslQueryRequestResponse dslQueryRequestResponse going through query pipeline
      * @param context query pipeline context
      * @param output consumer for queryRequestResponses emitted as the result of processing
      */
-    default void process(QueryRequestResponse queryRequestResponse, Context context, Consumer<QueryRequestResponse> output) {
-        Optional.ofNullable(process(queryRequestResponse, context)).ifPresent(output);
+    default void process(DslQueryRequestResponse dslQueryRequestResponse, Context context, Consumer<DslQueryRequestResponse> output) {
+        Optional.ofNullable(process(dslQueryRequestResponse, context)).ifPresent(output);
     }
 }

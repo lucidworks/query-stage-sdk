@@ -4,7 +4,7 @@ import com.lucidworks.fusion.schema.SchemaAnnotations.Property;
 import com.lucidworks.fusion.schema.SchemaAnnotations.RootSchema;
 import com.lucidworks.fusion.schema.SchemaAnnotations.StringSchema;
 import com.lucidworks.querying.api.Context;
-import com.lucidworks.querying.api.QueryRequestResponse;
+import com.lucidworks.querying.api.DslQueryRequestResponse;
 import com.lucidworks.querying.api.QueryStageBase;
 import com.lucidworks.querying.api.Stage;
 import com.lucidworks.querying.api.fusion.Fusion;
@@ -23,14 +23,14 @@ public class QueryStageTest {
         when(config.timeAllowed()).thenReturn("5000");
         Fusion fusion = mock(Fusion.class);
 
-        QueryRequestResponse query = new MockQueryRequestResponse();
+        DslQueryRequestResponse query = new MockDslQueryRequestResponse();
         Context context = mock(Context.class);
 
         TestStage stage = new TestStage();
         stage.init(config, fusion);
-        final QueryRequestResponse processedQuery = stage.process(query, context);
+        final DslQueryRequestResponse processedQuery = stage.process(query, context);
 
-        assertTrue(processedQuery.getQueryRequest().hasQueryParam("timeAllowed"));
+        assertTrue(processedQuery.getDslQueryRequest().getParams().containsKey("timeAllowed"));
     }
 
     @RootSchema(title = "Test", description = "Test stage.")
@@ -45,8 +45,8 @@ public class QueryStageTest {
     static class TestStage extends QueryStageBase<TestStageConfig> {
 
         @Override
-        public QueryRequestResponse process(QueryRequestResponse query, Context context) {
-            query.getQueryRequest().addQueryParam("timeAllowed", config.timeAllowed());
+        public DslQueryRequestResponse process(DslQueryRequestResponse query, Context context) {
+            query.getDslQueryRequest().getParams().put("timeAllowed", config.timeAllowed());
             return query;
         }
     }
