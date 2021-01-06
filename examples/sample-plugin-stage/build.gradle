@@ -20,7 +20,7 @@ configurations {
 
 dependencies {
     // Query Stage SDK dependency is required for all plugins, version must be compatible with your Fusion deployment
-    implementation(group: 'com.lucidworks-plugins.query-stage-sdk', name: 'query-stage-plugin-sdk', version: '0.0.1-A26990-SNAPSHOT', classifier: 'all')
+    provided(group: 'com.lucidworks-plugins.query-stage-sdk', name: 'query-stage-plugin-sdk', version: '0.0.1-A26990-SNAPSHOT', classifier: 'all')
 
     // prometheus client dependency is only needed if plugins are publishing custom metrics via Fusion
     provided 'io.prometheus:simpleclient_dropwizard:0.7.0'
