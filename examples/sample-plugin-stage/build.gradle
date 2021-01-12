@@ -1,6 +1,16 @@
 apply plugin: 'java-library'
 
 repositories {
+    maven {
+        credentials {
+            username = "${lucidArtifactoryUsername}"
+            password = "${lucidArtifactoryPassword}"
+        }
+        authentication {
+            basic(BasicAuthentication)
+        }
+        url "https://artifactory.lucidworks.com/artifactory/fusion-dev/"
+    }
     mavenLocal()
     mavenCentral()
     maven {
@@ -19,8 +29,10 @@ configurations {
 }
 
 dependencies {
+    provided 'com.lucidworks.cloud:search-dsl:5.+'
+
     // Query Stage SDK dependency is required for all plugins, version must be compatible with your Fusion deployment
-    provided(group: 'com.lucidworks-plugins.query-stage-sdk', name: 'query-stage-plugin-sdk', version: '0.0.1-A26990-SNAPSHOT', classifier: 'all')
+    provided 'com.lucidworks-plugins.query-stage-sdk:query-stage-plugin-sdk:0.0.0-A26990-SNAPSHOT'
 
     // prometheus client dependency is only needed if plugins are publishing custom metrics via Fusion
     provided 'io.prometheus:simpleclient_dropwizard:0.7.0'

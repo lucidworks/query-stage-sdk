@@ -1,13 +1,9 @@
 plugins {
-    id 'nebula.release' version '14.1.1' apply false
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
-    id 'java'
+    id 'nebula.release' version '15.2.0' apply false
 }
 
 allprojects {
     apply plugin: 'nebula.release'
-    apply plugin: 'com.github.johnrengelman.shadow'
-    apply plugin: 'java'
 }
 
 subprojects {
