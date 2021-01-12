@@ -4,9 +4,7 @@ java {
 }
 
 dependencies {
-    // Using a local JAR-file of the Search DSL until it can be replaced with an externally published version
-    api files('./libs/search-dsl.jar')
-
+    api 'com.lucidworks.cloud:search-dsl:5.+'
     api 'com.lucidworks-schema:schema-api:1.4.0'
     api 'org.slf4j:slf4j-api:1.7.28'
 }

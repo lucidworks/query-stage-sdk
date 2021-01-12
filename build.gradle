@@ -19,6 +19,16 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
+        maven {
+            credentials {
+                username = "${lucidArtifactoryUsername}"
+                password = "${lucidArtifactoryPassword}"
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+            url "https://artifactory.lucidworks.com/artifactory/fusion-dev/"
+        }
         mavenCentral()
         mavenLocal()
         maven {
