@@ -1,0 +1,71 @@
+apply plugin: 'java-library'
+
+repositories {
+    maven {
+        credentials {
+            username = "${lucidArtifactoryUsername}"
+            password = "${lucidArtifactoryPassword}"
+        }
+        authentication {
+            basic(BasicAuthentication)
+        }
+        url "https://artifactory.lucidworks.com/artifactory/fusion-dev/"
+    }
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://artifactory.lucidworks.com/artifactory/public-artifacts/"
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+version = '0.0.1'
+
+configurations {
+    provided // configuration for dependencies that are already present in Fusion
+    implementation.extendsFrom(provided)
+}
+
+dependencies {
+    provided 'com.lucidworks.cloud:search-dsl:5.+'
+
+    // Query Stage SDK dependency is required for all plugins, version must be compatible with your Fusion deployment
+    provided 'com.lucidworks-plugins.query-stage-sdk:query-stage-plugin-sdk:1.+'
+
+    // prometheus client dependency is only needed if plugins are publishing custom metrics via Fusion
+    provided 'io.prometheus:simpleclient_dropwizard:0.7.0'
+
+    implementation "org.apache.commons:commons-lang3:3.4"
+
+    testImplementation "junit:junit:4.13"
+    testImplementation "org.mockito:mockito-core:3.2.4"
+    testImplementation "org.slf4j:slf4j-simple:1.7.30"
+    testImplementation "com.lucidworks-plugins.query-stage-sdk:query-stage-sdk-test:1.+"
+}
+
+// use this gradle task to assemble plugin zip file
+task assemblePlugin(type: Jar) {
+    group("build")
+    getArchiveExtension().set("zip")
+    manifest {
+        attributes 'Plugin-Id': 'sample-plugin'
+        attributes 'Plugin-Version': '0.0.1'
+        attributes 'Plugin-SDK-Version': '1.0.0-SNAPSHOT'
+        attributes 'Plugin-Base-Package': 'com.lucidworks.sample'
+    }
+
+    into('lib') {
+        from configurations.runtimeClasspath - configurations.provided
+        from jar
+    }
+}
+
+// use this gradle task to assemble and deploy plugin to Fusion
+task deploy(type: Exec, dependsOn: ["assemblePlugin"]) {
+    commandLine "curl", "-u", "${fusionUser}:${fusionPassword}", "-X", "PUT", "-H", "content-type:application/zip",
+            "${fusionApiTarget}/api/query-stage-plugins",
+            "--data-binary",
+            "@${assemblePlugin.outputs.files.singleFile.absolutePath}"
+}

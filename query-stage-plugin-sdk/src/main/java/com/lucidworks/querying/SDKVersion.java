@@ -1,6 +1,7 @@
 package com.lucidworks.querying;
 
 public class SDKVersion {
+
   private static final String VERSION;
 
   static {

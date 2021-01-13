@@ -3,6 +3,9 @@ package com.lucidworks.querying.api;
 import com.lucidworks.querying.api.fusion.Fusion;
 import com.lucidworks.querying.config.QueryStageConfig;
 
+import java.util.Optional;
+import java.util.function.Consumer;
+
 /**
  * Fusion query pipeline stage. Custom query stages must implement this interface to be discovered and called
  * by Fusion.
@@ -43,18 +46,45 @@ public interface QueryStage<T extends QueryStageConfig> {
     void init(T config, Fusion fusion);
 
     /**
-     * Process a single query. This method is called for each query passing through a query pipeline.
+     * Process a single dslQueryRequestResponse. This method is called for each dslQueryRequestResponse passing through
+     * a query pipeline.
      *
-     * Implement this method to perform processing of a single {@link QueryRequestAndResponse} instance that results in either 1 or 0
-     * queries being emitted. Return null to drop query from the pipeline.
+     * Implement this method to perform processing of a single {@link DslQueryRequestResponse} instance that results in
+     * either 1 or 0 dslQueryRequestResponses being emitted. Return null to drop query from the pipeline.
      *
      * Note that this method implementation must be thread-safe as it can be invoked concurrently by multiple threads.
      *
-     * @param query query going through query pipeline
+     * @param dslQueryRequestResponse dslQueryRequestResponse going through query pipeline
      * @param context query pipeline context
      * @return processed query or null to drop query from the pipeline
      */
-    default QueryRequestAndResponse process(QueryRequestAndResponse query, Context context) {
-        return query;
+    default DslQueryRequestResponse process(DslQueryRequestResponse dslQueryRequestResponse, Context context) {
+        return dslQueryRequestResponse;
+    }
+
+    /**
+     * Process single dslQueryRequestResponse. This method is called for each dslQueryRequestResponse passing through
+     * a query pipeline.
+     *
+     * Implement this method to perform processing of single {@link DslQueryRequestResponse} instance that results in an
+     * arbitrary number of dslQueryRequestResponses being emitted.
+     *
+     * Call <code>output.accept(dslQueryRequestResponse)</code> for each dslQueryRequestResponse you want to
+     * emit as a result of processing. Note that after sending a dslQueryRequestResponse instance to the output, its
+     * state may be changed by subsequent stages, therefore it is strongly advised to discard the
+     * dslQueryRequestResponse instance immediately after emitting it. Passing <code>null</code> to <code>output</code>
+     * consumer will cause {@link IllegalArgumentException}.
+     *
+     * Overriding the default implementation of this method will result in {@link #process(DslQueryRequestResponse, Context)}
+     * to not be called. Default implementation is to call {@link #process(DslQueryRequestResponse, Context)} method.
+     *
+     * Note that this method implementation must be thread-safe as it can be invoked concurrently by multiple threads.
+     *
+     * @param dslQueryRequestResponse dslQueryRequestResponse going through query pipeline
+     * @param context query pipeline context
+     * @param output consumer for queryRequestResponses emitted as the result of processing
+     */
+    default void process(DslQueryRequestResponse dslQueryRequestResponse, Context context, Consumer<DslQueryRequestResponse> output) {
+        Optional.ofNullable(process(dslQueryRequestResponse, context)).ifPresent(output);
     }
 }
