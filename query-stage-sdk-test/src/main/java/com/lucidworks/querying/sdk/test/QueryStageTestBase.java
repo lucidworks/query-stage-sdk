@@ -42,6 +42,8 @@ public abstract class QueryStageTestBase<C extends QueryStageConfig> {
   /**
    * Create new DSL query request response.
    *
+   * @param dslQueryRequest DslQueryRequest instance
+   * @param dslQueryResponse DslQueryResponse instance
    * @return DSL query request response instance
    */
   public DslQueryRequestResponse newDslQueryRequestResponse(DslQueryRequest dslQueryRequest, DslQueryResponse dslQueryResponse) {
@@ -63,7 +65,7 @@ public abstract class QueryStageTestBase<C extends QueryStageConfig> {
    * The callback can be used to setup return values for the config mock, e.g.
    *
    * <pre>
-   *   SimpleStageConfig stageConfig = newConfig(SimpleStageConfig.class, config -> {
+   *   SimpleStageConfig stageConfig = newConfig(SimpleStageConfig.class, config -&gt; {
    *     when(config.field()).thenReturn("field_name");
    *     when(config.text()).thenReturn("text_value");
    *   });
