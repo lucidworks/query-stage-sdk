@@ -39,7 +39,7 @@ After successful deployment, new stages should be visible in the `Stages` list i
 . Navigate to *System* > *Blobs*
 . Click *Add*
 . Select *Query Stage Plugin*
-// There's no such blob type in the UI; should there be?  There is an "Index Stage Plugin" blob type.
+// There's no such blob type at the moment, but there will be: https://lucidworks.atlassian.net/browse/APOLLO-28979
 . Click *Browse...* and select your plugin file
 . Click *Upload*
 
