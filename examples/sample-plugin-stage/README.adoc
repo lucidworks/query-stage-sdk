@@ -1,23 +1,26 @@
 = Sample plugin stage
 
 //tag::body[]
-Sample project with two querying stages. 
+The sample plugin stage is an example project with two simple querying stages:
 
-* link:src/main/java/com/lucidworks/sample/request/UpdateRequestStage.java[Update request] - Stage that is just adding a new query param with a specific value to each query request.
-* link:src/main/java/com/lucidworks/sample/response/UpdateResponseStage.java[Update response] - Stage that is just adding a new field with a specific value to each query response.
+* link:src/main/java/com/lucidworks/sample/request/UpdateRequestStage.java[Update request] - Add a new query parameter with a specific value to each query request.
+* link:src/main/java/com/lucidworks/sample/response/UpdateResponseStage.java[Update response] - Add a new field with a specific value to each query response.
 
-This is also a demonstration of a basic gradle project that assembles a Fusion query stage plugin zip.
+This is also a demonstration of a basic `gradle` project that assembles a Fusion query stage plugin `.zip`.
 
 //tag::build-and-deploy[]
 :sectnums:
-== Build the sample plugin stage
-. From the main folder, call:
+== Build the plugin stage
+
+From the main folder, call:
 +
 ----
 ./gradlew -p examples/sample-plugin-stage assemblePlugin
 ----
 +
-This creates a plugin zip file (with required manifest file) inside the `build/libs` folder.
+Substitute the path to your project.
++
+This creates a plugin `.zip` file (with required manifest file) inside the `build/libs` folder.
 
 == Deploy the stage
 :!sectnums:
@@ -28,8 +31,17 @@ You can choose from several different ways to deploy the sample plugin stage:
 * link:#gradle[Use gradle]
 * link:#api[Use the REST API]
 
+After successful deployment, new stages should be visible in the `Stages` list in the Fusion Query Pipelines UI.
+
 [[upload]]
 === Upload it to the blob store
+
+. Navigate to *System* > *Blobs*
+. Click *Add*
+. Select *Query Stage Plugin*
+// There's no such blob type in the UI; should there be?  There is an "Index Stage Plugin" blob type.
+. Click *Browse...* and select your plugin file
+. Click *Upload*
 
 [[gradle]]
 === Deploy it using gradle
@@ -42,15 +54,12 @@ You can choose from several different ways to deploy the sample plugin stage:
 [[api]]
 === Deploy it with the REST API
 
-You can also deploy a plugin via the Fusion REST API by using `curl`:
 [source,bash]
 ----
 curl -u [user]:[password] -X PUT -H "Content-Type:application/zip" --data-binary @sample-plugin-stage-0.0.1.zip https://<fusion-host>/api/query-stage-plugins
 ----
 
 //Link to the new Query Stage Plugins API
-
-After successful deployment, new stages should be visible in the `Stages` list in the Fusion Query Pipelines UI.
 
 //end::build-and-deploy[]
 
