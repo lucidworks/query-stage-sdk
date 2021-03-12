@@ -13,13 +13,13 @@ This is also a demonstration of a basic `gradle` project that assembles a Fusion
 == Build the plugin stage
 
 From the main folder, call:
-+
+
 ----
 ./gradlew -p examples/sample-plugin-stage assemblePlugin
 ----
-+
+
 Substitute the path to your project.
-+
+
 This creates a plugin `.zip` file (with required manifest file) inside the `build/libs` folder.
 
 == Deploy the stage
@@ -36,11 +36,11 @@ After successful deployment, new stages should be visible in the `Stages` list i
 [[upload]]
 === Upload it to the blob store
 
-. Navigate to *System* > *Blobs*
-. Click *Add*
-. Select *Query Stage Plugin*
+. Navigate to *System* > *Blobs*.
+. Click *Add*.
+. Select *Query Stage Plugin*.
 // There's no such blob type at the moment, but there will be: https://lucidworks.atlassian.net/browse/APOLLO-28979
-. Click *Browse...* and select your plugin file
+. Click *Browse...* and select your plugin file.
 . Click *Upload*
 
 [[gradle]]
