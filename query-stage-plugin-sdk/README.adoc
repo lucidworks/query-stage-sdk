@@ -78,7 +78,7 @@ public class SimpleStage extends QueryStageBase<SimpleStageConfig> {
 . Fusion creates a `QueryStage` instance and initializes it. 
 . Fusion begins calling the `process` method (see the example above) for each query passing through the query pipeline.
 
-One stage instance can be used by Fusion for processing multiple queries and the `process` method can be called from multiple concurrently-running threads. Additionally, Fusion can initialize and maintain multiple stage instances with the same configuration in separate indexing service nodes. Therefore, it is important to make sure the plugin stage implementation is thread-safe and processing logic is stateless.
+One stage instance can be used by Fusion for processing multiple queries and the `process` method can be called from multiple concurrently-running threads. Additionally, Fusion can initialize and maintain multiple stage instances with the same configuration in separate query service nodes. Therefore, it is important to make sure the plugin stage implementation is thread-safe and processing logic is stateless.
 
 The plugin stage may throw an exception while processing a query. This does _not_ cause any side effects; the query will simply not be processed anymore. The whole query pipeline will still be in use and Fusion will continue to call the `process` method for other queries. Any information about thrown exceptions can be found in the https://doc.lucidworks.com/fusion/5.4/130/the-dev-ops-center#log-viewer[logs].
 
