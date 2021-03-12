@@ -1,0 +1,66 @@
+= Sample plugin stage
+
+//tag::body[]
+The sample plugin stage is an example project with two simple querying stages:
+
+* link:src/main/java/com/lucidworks/sample/request/UpdateRequestStage.java[Update request] - Add a new query parameter with a specific value to each query request.
+* link:src/main/java/com/lucidworks/sample/response/UpdateResponseStage.java[Update response] - Add a new field with a specific value to each query response.
+
+This is also a demonstration of a basic `gradle` project that assembles a Fusion query stage plugin `.zip`.
+
+//tag::build-and-deploy[]
+:sectnums:
+== Build the plugin stage
+
+From the main folder, call:
+
+----
+./gradlew -p examples/sample-plugin-stage assemblePlugin
+----
+
+Substitute the path to your project.
+
+This creates a plugin `.zip` file (with required manifest file) inside the `build/libs` folder.
+
+== Deploy the stage
+:!sectnums:
+
+You can choose from several different ways to deploy the sample plugin stage:
+
+* link:#upload[Upload it to the blob store]
+* link:#gradle[Use gradle]
+* link:#api[Use the REST API]
+
+After successful deployment, new stages should be visible in the `Stages` list in the Fusion Query Pipelines UI.
+
+[[upload]]
+=== Upload it to the blob store
+
+. Navigate to *System* > *Blobs*.
+. Click *Add*.
+. Select *Query Stage Plugin*.
+// There's no such blob type at the moment, but there will be: https://lucidworks.atlassian.net/browse/APOLLO-28979
+. Click *Browse...* and select your plugin file.
+. Click *Upload*
+
+[[gradle]]
+=== Deploy it using gradle
+
+[source,bash]
+----
+./gradlew -p examples/sample-plugin-stage deploy -PfusionUser=[user] -PfusionPassword=[password]
+----
+
+[[api]]
+=== Deploy it with the REST API
+
+[source,bash]
+----
+curl -u [user]:[password] -X PUT -H "Content-Type:application/zip" --data-binary @sample-plugin-stage-0.0.1.zip https://<fusion-host>/api/query-stage-plugins
+----
+
+//Link to the new Query Stage Plugins API
+
+//end::build-and-deploy[]
+
+//end::body[]
