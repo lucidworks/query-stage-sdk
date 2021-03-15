@@ -13,7 +13,7 @@ ifdef::env-github[]
 the example plugin link:../examples/sample-plugin-stage/README.md[README].
 endif::[]
 ifndef::env-github[]
-link:/how-to/77777777777777/build-and-deploy[Build and Deploy A Query Stage Plugin].
+link:/how-to/h9gvvk/build-and-deploy[Build and Deploy A Query Stage Plugin].
 endif::[]
 
 Alternatively, it can be assembled by any other build tool as long as the file and directory structure is correct.
