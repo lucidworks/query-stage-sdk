@@ -3,6 +3,9 @@ package com.lucidworks.querying.sdk.test;
 import com.lucidworks.querying.api.DslQueryRequest;
 import com.lucidworks.querying.api.DslQueryRequestResponse;
 import com.lucidworks.querying.api.DslQueryResponse;
+import com.lucidworks.querying.api.QueryRequest;
+import com.lucidworks.querying.api.QueryRequestResponse;
+import com.lucidworks.querying.api.QueryResponse;
 import com.lucidworks.querying.api.QueryStage;
 import com.lucidworks.querying.api.fusion.Fusion;
 import com.lucidworks.querying.config.QueryStageConfig;
@@ -48,6 +51,17 @@ public abstract class QueryStageTestBase<C extends QueryStageConfig> {
    */
   public DslQueryRequestResponse newDslQueryRequestResponse(DslQueryRequest dslQueryRequest, DslQueryResponse dslQueryResponse) {
     return new TestDslQueryRequestResponse(dslQueryRequest, dslQueryResponse);
+  }
+
+  /**
+   * Create new query request response.
+   *
+   * @param queryRequest QueryRequest instance
+   * @param queryResponse QueryResponse instance
+   * @return query request response instance
+   */
+  public QueryRequestResponse newQueryRequestResponse(QueryRequest queryRequest, QueryResponse queryResponse) {
+    return new TestQueryRequestResponse(queryRequest, queryResponse);
   }
 
   /**

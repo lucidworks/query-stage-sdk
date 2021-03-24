@@ -35,14 +35,14 @@ public class UpdateResponseStageTest extends QueryStageTestBase<UpdateResponseSt
 
         List<ResponseDocument> docs = new ArrayList<>();
         docs.add(new ResponseDocument(
-                "collection", "type", "some-id", 0.4, null, null, null));
+                "collection", "type", "some-id", 0.4, null, null, null, null));
 
-        queryResponse.setResults(new Results(new DocList(1L, 0.0, docs, null)));
+        queryResponse.setResults(new Results(new DocList(1L, 0.0, docs, null), null));
 
         Map<String, Object> fields = new HashMap<>();
         fields.put("field", "value");
         ResponseDocument document = new ResponseDocument(
-                "collection", "type", "some-id", 0.4, fields, null, null);
+                "collection", "type", "some-id", 0.4, fields, null, null, null);
         queryResponse.getResults().getList().setDocs(Collections.singletonList(document));
 
         DslQueryRequestResponse queryRequestResponse = newDslQueryRequestResponse(queryRequest, queryResponse);
