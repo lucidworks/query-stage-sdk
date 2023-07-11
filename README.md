@@ -3,9 +3,9 @@
 This public Github repository provides resources to help developers build their own Fusion Query stage plugins. 
 The resources include documentation on how to use the SDK, as well as an example plugin implementation:
 
-* [Query Stage Plugin SDK](query-stage-plugin-sdk/README.md) - Query Stage SDK library. It contains 
+* [Query Stage Plugin SDK](query-stage-plugin-sdk/README.adoc) - Query Stage SDK library. It contains 
   classes and interfaces necessary for building new query plugin stages. Documentation can be found in both the README and javadocs.
-* [Example Plugin Stage](examples/sample-plugin-stage/README.md) - contains an example of how a plugin can be  implemented as well as information on how to build and deploy the plugin.
+* [Example Plugin Stage](examples/sample-plugin-stage/README.adoc) - contains an example of how a plugin can be  implemented as well as information on how to build and deploy the plugin.
 
 # Fusion Version
 
