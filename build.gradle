@@ -15,16 +15,6 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
-        maven {
-            credentials {
-                username = "${lucidArtifactoryUsername}"
-                password = "${lucidArtifactoryPassword}"
-            }
-            authentication {
-                basic(BasicAuthentication)
-            }
-            url "https://artifactory.lucidworks.com/artifactory/fusion-dev/"
-        }
         mavenCentral()
         mavenLocal()
         maven {
@@ -37,24 +27,4 @@ subprojects {
         testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     }
 
-    publishing {
-        publications {
-            maven(MavenPublication) {
-                from components.java
-            }
-        }
-        repositories {
-            mavenLocal()
-            maven {
-                url project.hasProperty('repositoryUrl') ? project.property('repositoryUrl') : ''
-                credentials {
-                    username project.hasProperty('lucidArtifactoryUsername') ? project.property('lucidArtifactoryUsername') : ''
-                    password project.hasProperty('lucidArtifactoryPassword') ? project.property('lucidArtifactoryPassword') : ''
-                }
-                authentication {
-                    basic(BasicAuthentication)
-                }
-            }
-        }
-    }
 }

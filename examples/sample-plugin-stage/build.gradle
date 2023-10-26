@@ -1,16 +1,6 @@
 apply plugin: 'java-library'
 
 repositories {
-    maven {
-        credentials {
-            username = "${lucidArtifactoryUsername}"
-            password = "${lucidArtifactoryPassword}"
-        }
-        authentication {
-            basic(BasicAuthentication)
-        }
-        url "https://artifactory.lucidworks.com/artifactory/fusion-dev/"
-    }
     mavenLocal()
     mavenCentral()
     maven {
