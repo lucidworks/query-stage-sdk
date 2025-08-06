@@ -8,10 +8,10 @@ repositories {
     }
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
-version = '0.0.1'
+version = '0.0.2' //controls the version of the plugin jar and the zip file.
 
 configurations {
     provided // configuration for dependencies that are already present in Fusion
@@ -19,10 +19,10 @@ configurations {
 }
 
 dependencies {
-    provided "com.lucidworks.cloud:search-dsl:6.1.3!!" //TODO update when a search-dsl version is available
+    provided "com.lucidworks.cloud:search-dsl:${searchDslVersion}"
 
     // Query Stage SDK dependency is required for all plugins, version must be compatible with your Fusion deployment
-    provided 'com.lucidworks-plugins.query-stage-sdk:query-stage-plugin-sdk:1.0.0'//TODO update when a query-stage-sdk version is available
+    provided "com.lucidworks-plugins.query-stage-sdk:query-stage-plugin-sdk:${queryStagePluginSDKVersion}"
 
     // prometheus client dependency is only needed if plugins are publishing custom metrics via Fusion
     provided 'io.prometheus:simpleclient_dropwizard:0.7.0'
@@ -32,7 +32,7 @@ dependencies {
     testImplementation "junit:junit:4.13"
     testImplementation "org.mockito:mockito-core:3.2.4"
     testImplementation "org.slf4j:slf4j-simple:1.7.30"
-    testImplementation "com.lucidworks-plugins.query-stage-sdk:query-stage-sdk-test:1.0.0"//TODO update when a query-stage-sdk version is available
+    testImplementation "com.lucidworks-plugins.query-stage-sdk:query-stage-sdk-test:${queryStagePluginSDKVersion}"
 }
 
 // use this gradle task to assemble plugin zip file
@@ -41,9 +41,11 @@ task assemblePlugin(type: Jar) {
     getArchiveExtension().set("zip")
     manifest {
         attributes 'Plugin-Id': 'sample-plugin'
-        attributes 'Plugin-Version': '0.0.1'
-        attributes 'Plugin-SDK-Version': '1.0.0-SNAPSHOT'
+        attributes 'Plugin-Version': "${project.version}"
+        attributes 'Plugin-SDK-Version': "${queryStagePluginSDKVersion}"
         attributes 'Plugin-Base-Package': 'com.lucidworks.sample'
+        attributes "Build-JDK": "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})"
+        attributes "Dependencies": "query-stage-plugin-sdk:${queryStagePluginSDKVersion}, search-dsl:${searchDslVersion}"
     }
 
     into('lib') {

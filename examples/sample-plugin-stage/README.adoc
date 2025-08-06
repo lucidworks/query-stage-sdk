@@ -15,7 +15,7 @@ This is also a demonstration of a basic `gradle` project that assembles a Fusion
 From the main folder, call:
 
 ----
-./gradlew -p examples/sample-plugin-stage assemblePlugin
+./gradlew -p examples/sample-plugin-stage clean assemblePlugin
 ----
 
 Substitute the path to your project.
