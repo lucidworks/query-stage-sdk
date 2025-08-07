@@ -1,9 +1,13 @@
 plugins {
-    id 'nebula.release' version '15.2.0' apply false
+    id 'nebula.release' version '17.2.2' apply false
 }
 
 allprojects {
     apply plugin: 'nebula.release'
+}
+
+repositories {
+    mavenCentral()
 }
 
 subprojects {
@@ -11,8 +15,8 @@ subprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'jacoco'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 
     repositories {
         mavenCentral()
@@ -27,4 +31,24 @@ subprojects {
         testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     }
 
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+            }
+        }
+        repositories {
+            mavenLocal()
+            maven {
+                url project.hasProperty('releaseUrl') ? project.property('releaseUrl') : ''
+                credentials {
+                    username project.hasProperty('lucidArtifactoryUsername') ? project.property('lucidArtifactoryUsername') : ''
+                    password project.hasProperty('lucidArtifactoryPassword') ? project.property('lucidArtifactoryPassword') : ''
+                }
+                authentication {
+                    basic(BasicAuthentication)
+                }
+            }
+        }
+    }
 }
