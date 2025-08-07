@@ -1,3 +1,3 @@
-@Library("one-platform-lib@FUS-7905") _
+@Library("one-platform-jenkins") _
 
 buildFusionPublicJavaLibraryK8s("query-stage-sdk", "11")
