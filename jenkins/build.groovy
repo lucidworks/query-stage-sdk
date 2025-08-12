@@ -1,3 +1,11 @@
-@Library("one-platform-jenkins@FUS-7095-take3") _
+@Library("one-platform-jenkins")_
 
-buildFusionPublicJavaLibraryK8s("query-stage-sdk", "11", ['releaseMajorVersion': true])
+properties([
+        [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
+        parameters([
+                booleanParam(name: 'LW_RELEASE', defaultValue: false, description: 'Release the query-stage-sdk.'),
+                choice(name: 'LW_SCOPE', choices: ['patch', 'minor', 'major'], description: 'Release scope')
+        ])
+])
+
+buildFusionPublicJavaLibraryK8s("11", [lw_release: "${params.LW_RELEASE}",lw_scope: "${params.LW_SCOPE}"] )
