@@ -14,3 +14,21 @@ The Query Stage SDK is available for use starting in Fusion 5.4
 # Fusion DSL
 
 The Query Stage SDK can only be used with the Fusion DSL. 
+
+
+
+
+# Compatibility matrix
+
+Both, Fusion and the implemented plugin need to use the same version of the Query Stage SDK.
+
+The following table shows the compatibility matrix for the Query Stage SDK and Fusion versions:
+
+
+| Fusion Version     | Query Stage SDK Version | Compile plugin with JDK Version |
+|--------------------|-------------------------|---------------------------------|
+| 5.4  -  5.9.14     | 1.0.0                   | 8                               |
+| 5.9.15             | 2.0.0                   | 11                              |
+
+
+Make sure to use the correct version of the Query Stage SDK and JDK when building your plugin to ensure compatibility with the Fusion version you are using.
