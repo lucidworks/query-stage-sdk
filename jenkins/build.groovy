@@ -1,4 +1,4 @@
-@Library("one-platform-jenkins")_
+@Library("one-platform-jenkins@FUS-7095-take3")_
 
 properties([
         [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false],
