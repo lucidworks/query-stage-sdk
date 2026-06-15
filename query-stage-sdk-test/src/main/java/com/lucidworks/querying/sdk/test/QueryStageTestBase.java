@@ -1,8 +1,5 @@
 package com.lucidworks.querying.sdk.test;
 
-import com.lucidworks.querying.api.DslQueryRequest;
-import com.lucidworks.querying.api.DslQueryRequestResponse;
-import com.lucidworks.querying.api.DslQueryResponse;
 import com.lucidworks.querying.api.QueryRequest;
 import com.lucidworks.querying.api.QueryRequestResponse;
 import com.lucidworks.querying.api.QueryResponse;
@@ -40,17 +37,6 @@ public abstract class QueryStageTestBase<C extends QueryStageConfig> {
     stage.init(config, fusion);
 
     return stage;
-  }
-
-  /**
-   * Create new DSL query request response.
-   *
-   * @param dslQueryRequest DslQueryRequest instance
-   * @param dslQueryResponse DslQueryResponse instance
-   * @return DSL query request response instance
-   */
-  public DslQueryRequestResponse newDslQueryRequestResponse(DslQueryRequest dslQueryRequest, DslQueryResponse dslQueryResponse) {
-    return new TestDslQueryRequestResponse(dslQueryRequest, dslQueryResponse);
   }
 
   /**

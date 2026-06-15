@@ -1,24 +1,21 @@
 package com.lucidworks.sample.response;
 
-import com.lucidworks.querying.api.DslQueryRequest;
-import com.lucidworks.querying.api.DslQueryRequestResponse;
-import com.lucidworks.querying.api.DslQueryResponse;
+import com.lucidworks.querying.api.Document;
+import com.lucidworks.querying.api.QueryRequest;
+import com.lucidworks.querying.api.QueryRequestResponse;
+import com.lucidworks.querying.api.QueryResponse;
 import com.lucidworks.querying.sdk.test.QueryStageTestBase;
-import com.lucidworks.querying.sdk.test.TestDslQueryRequest;
-import com.lucidworks.querying.sdk.test.TestDslQueryResponse;
-import com.lucidworks.search.dsl.response.DocList;
-import com.lucidworks.search.dsl.response.ResponseDocument;
-import com.lucidworks.search.dsl.response.Results;
+import com.lucidworks.querying.sdk.test.TestQueryRequest;
+import com.lucidworks.querying.sdk.test.TestQueryResponse;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class UpdateResponseStageTest extends QueryStageTestBase<UpdateResponseStageConfig> {
@@ -30,27 +27,28 @@ public class UpdateResponseStageTest extends QueryStageTestBase<UpdateResponseSt
             when(config.value()).thenReturn("value");
         });
 
-        DslQueryRequest queryRequest = new TestDslQueryRequest();
-        DslQueryResponse queryResponse = new TestDslQueryResponse();
+        QueryRequest queryRequest = new TestQueryRequest();
+        TestQueryResponse queryResponse = new TestQueryResponse();
 
-        List<ResponseDocument> docs = new ArrayList<>();
-        docs.add(new ResponseDocument(
-                "collection", "type", "some-id", 0.4, null, null, null, null));
+        Map<String, Object> docFields = new HashMap<>();
+        Document document = mock(Document.class);
+        when(document.setField(org.mockito.ArgumentMatchers.anyString(), org.mockito.ArgumentMatchers.any()))
+                .thenAnswer(invocation -> {
+                    docFields.put(invocation.getArgument(0), invocation.getArgument(1));
+                    return null;
+                });
+        when(document.containsField(org.mockito.ArgumentMatchers.anyString()))
+                .thenAnswer(invocation -> docFields.containsKey(invocation.getArgument(0)));
 
-        queryResponse.setResults(new Results(new DocList(1L, 0.0, docs, null), null));
+        queryResponse.updateDocuments(Collections.singletonList(document));
 
-        Map<String, Object> fields = new HashMap<>();
-        fields.put("field", "value");
-        ResponseDocument document = new ResponseDocument(
-                "collection", "type", "some-id", 0.4, fields, null, null, null);
-        queryResponse.getResults().getList().setDocs(Collections.singletonList(document));
-
-        DslQueryRequestResponse queryRequestResponse = newDslQueryRequestResponse(queryRequest, queryResponse);
+        QueryRequestResponse queryRequestResponse = newQueryRequestResponse(queryRequest, queryResponse);
 
         UpdateResponseStage stage = createStage(UpdateResponseStage.class, stageConfig);
-        final DslQueryRequestResponse processedQRR = stage.process(queryRequestResponse, null);
+        final QueryRequestResponse processedQRR = stage.process(queryRequestResponse, null);
 
-        assertTrue(processedQRR.getDslQueryResponse().getResults().getList().getDocs().get(0).getFields().containsKey("field"));
-        assertEquals("value", processedQRR.getDslQueryResponse().getResults().getList().getDocs().get(0).getFields().get("field"));
+        Document processedDoc = processedQRR.getQueryResponse().get().getDocuments().get(0);
+        assertTrue(processedDoc.containsField("field"));
+        assertEquals("value", docFields.get("field"));
     }
 }
