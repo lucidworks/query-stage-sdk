@@ -4,7 +4,6 @@ java {
 }
 
 dependencies {
-    api "com.lucidworks.cloud:search-dsl:${searchDslVersion}"
     api "com.lucidworks-schema:schema-api:${schemaApiVersion}"
     api 'org.slf4j:slf4j-api:1.7.28'
 }
@@ -15,7 +14,7 @@ jar {
                 "Implementation-Version": "${project.version}",
                 "SDK-Version": "${project.version}",
                 "Build-Jdk": "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
-                "Dependencies": "search-dsl:${searchDslVersion}, schema-api:${schemaApiVersion}"
+                "Dependencies": "schema-api:${schemaApiVersion}"
         )
     }
 }

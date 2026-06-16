@@ -1,11 +1,11 @@
 package com.lucidworks.sample.request;
 
-import com.lucidworks.querying.api.DslQueryRequest;
-import com.lucidworks.querying.api.DslQueryResponse;
-import com.lucidworks.querying.api.DslQueryRequestResponse;
+import com.lucidworks.querying.api.QueryRequest;
+import com.lucidworks.querying.api.QueryRequestResponse;
+import com.lucidworks.querying.api.QueryResponse;
 import com.lucidworks.querying.sdk.test.QueryStageTestBase;
-import com.lucidworks.querying.sdk.test.TestDslQueryRequest;
-import com.lucidworks.querying.sdk.test.TestDslQueryResponse;
+import com.lucidworks.querying.sdk.test.TestQueryRequest;
+import com.lucidworks.querying.sdk.test.TestQueryResponse;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,15 +21,15 @@ public class UpdateRequestStageTest extends QueryStageTestBase<UpdateRequestStag
             when(config.value()).thenReturn("5000");
         });
 
-        DslQueryRequest queryRequest = new TestDslQueryRequest();
-        DslQueryResponse queryResponse = new TestDslQueryResponse();
+        QueryRequest queryRequest = new TestQueryRequest();
+        QueryResponse queryResponse = new TestQueryResponse();
 
-        DslQueryRequestResponse queryRequestResponse = newDslQueryRequestResponse(queryRequest, queryResponse);
+        QueryRequestResponse queryRequestResponse = newQueryRequestResponse(queryRequest, queryResponse);
 
         UpdateRequestStage stage = createStage(UpdateRequestStage.class, stageConfig);
-        final DslQueryRequestResponse processedQRR = stage.process(queryRequestResponse, null);
+        final QueryRequestResponse processedQRR = stage.process(queryRequestResponse, null);
 
-        assertTrue(processedQRR.getDslQueryRequest().getParams().containsKey("timeout"));
-        assertEquals("5000", processedQRR.getDslQueryRequest().getParams().get("timeout"));
+        assertTrue(processedQRR.getQueryRequest().hasParam("timeout"));
+        assertEquals("5000", processedQRR.getQueryRequest().getFirstParam("timeout"));
     }
 }

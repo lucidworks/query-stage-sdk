@@ -19,8 +19,6 @@ configurations {
 }
 
 dependencies {
-    provided "com.lucidworks.cloud:search-dsl:${searchDslVersion}"
-
     // Query Stage SDK dependency is required for all plugins, version must be compatible with your Fusion deployment
     provided "com.lucidworks-plugins.query-stage-sdk:query-stage-plugin-sdk:${queryStagePluginSDKVersion}"
 
@@ -45,7 +43,7 @@ task assemblePlugin(type: Jar) {
         attributes 'Plugin-SDK-Version': "${queryStagePluginSDKVersion}"
         attributes 'Plugin-Base-Package': 'com.lucidworks.sample'
         attributes "Build-JDK": "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})"
-        attributes "Dependencies": "query-stage-plugin-sdk:${queryStagePluginSDKVersion}, search-dsl:${searchDslVersion}"
+        attributes "Dependencies": "query-stage-plugin-sdk:${queryStagePluginSDKVersion}"
     }
 
     into('lib') {
